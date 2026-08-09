@@ -1,0 +1,42 @@
+﻿[
+  {
+    "query": "Que es la medicina funcional y en que se diferencia de la medicina convencional?",
+    "expected_filenames": ["definicion_medicina_funcional.txt"]
+  },
+  {
+    "query": "Que papel juega la microbiota intestinal en el sistema inmune?",
+    "expected_filenames": ["microbiota_intestinal.txt"]
+  },
+  {
+    "query": "Como afecta el estres cronico al cortisol y al eje hipotalamo-hipofisis-suprarrenal?",
+    "expected_filenames": ["eje_hpa_estres_cortisol.txt"]
+  },
+  {
+    "query": "En que consiste la dieta de eliminacion en medicina funcional?",
+    "expected_filenames": ["nutricion_funcional_dieta_eliminacion.txt"]
+  },
+  {
+    "query": "Que alimentos se recomiendan en una dieta antiinflamatoria?",
+    "expected_filenames": ["dieta_antiinflamatoria.txt"]
+  },
+  {
+    "query": "Que es la inflamacion cronica de bajo grado?",
+    "expected_filenames": ["inflamacion_cronica_bajo_grado.txt"]
+  },
+  {
+    "query": "Cuales son las fases de la detoxificacion hepatica?",
+    "expected_filenames": ["detoxificacion_vias_hepaticas.txt"]
+  },
+  {
+    "query": "Como aborda la medicina funcional el tratamiento de la diabetes tipo 2?",
+    "expected_filenames": ["medicina_funcional_enfermedades_cronicas.txt"]
+  },
+  {
+    "query": "Que relacion hay entre la microbiota y la obesidad?",
+    "expected_filenames": ["microbiota_intestinal.txt"]
+  },
+  {
+    "query": "Que es el intestino permeable?",
+    "expected_filenames": ["nutricion_funcional_dieta_eliminacion.txt"]
+  }
+]

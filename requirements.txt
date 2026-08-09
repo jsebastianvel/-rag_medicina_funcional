@@ -1,0 +1,13 @@
+﻿# Embeddings y vector store (locales)
+sentence-transformers>=3.0.0
+faiss-cpu>=1.8.0
+
+# Retrieval sparse
+rank-bm25>=0.2.2
+
+# Generacion (LLM)
+google-genai>=0.3.0
+
+# Utilidades
+python-dotenv>=1.0.1
+numpy>=1.26.0

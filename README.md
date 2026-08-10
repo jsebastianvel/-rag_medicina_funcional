@@ -1,4 +1,16 @@
-﻿# RAG Medicina Funcional
+﻿---
+title: RAG Medicina Funcional
+emoji: 🩺
+colorFrom: blue
+colorTo: green
+sdk: gradio
+sdk_version: 6.22.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
+# RAG Medicina Funcional
 
 Proyecto educativo de Retrieval-Augmented Generation (RAG) "puro": cada etapa del
 pipeline esta implementada de forma explicita (sin frameworks tipo LangChain) para
@@ -6,6 +18,8 @@ entender el mecanismo completo, no solo llamar una API.
 
 Dominio: medicina funcional (corpus propio en `data/raw/`, 8 documentos reunidos de
 fuentes publicas en espanol).
+
+**Demo en vivo:** _pendiente de desplegar en Hugging Face Spaces._
 
 ## Pipeline
 
@@ -97,20 +111,25 @@ preguntas, edita esa linea o llama a las funciones `hybrid_search()` o
 
 - Los modelos de embeddings y de reranking son locales: se descargan una sola vez
   y despues no necesitan conexion a internet.
-- `src.generate` si llama a la API de Gemini en cada ejecucion. El tier gratuito
-  tiene un limite bajo de solicitudes por dia (20 en el modelo usado por defecto).
-  Si aparece un error 429 RESOURCE_EXHAUSTED, hay que esperar al reinicio diario
-  de la cuota o revisar el plan de facturacion en la consola de Google AI.
+- `src.generate` si llama a la API de Gemini en cada ejecucion. El modelo usado
+  (`gemini-flash-lite-latest`) tiene un limite gratuito de 15 solicitudes/minuto
+  y 500/dia. Si aparece un error 429 RESOURCE_EXHAUSTED, esperar unos minutos o
+  al reinicio diario de la cuota.
 
-## Problema conocido en Windows
+## Problemas conocidos en Windows
 
-Si `python -m src.vector_store` falla al escribir `data/index/faiss.index`
-(errores de archivo o de permisos) aunque la carpeta exista: en algunos entornos
-Windows, cargar PyTorch en el mismo proceso puede bloquear escrituras posteriores
-hacia carpetas de usuario (parece una proteccion de carpetas reaccionando a las
-DLLs de PyTorch). El script soporta un workaround: generar el indice en otra
-carpeta usando la variable de entorno `RAG_FAISS_INDEX_PATH` y despues copiarlo al
-lugar final con un comando separado, por ejemplo con `Copy-Item` en PowerShell.
+- **Escritura de archivos nuevos dentro del proyecto**: si este repo vive en una
+  carpeta sincronizada con OneDrive (por ejemplo bajo `Documents`), escribir
+  `data/index/chunks.json` o `data/index/faiss.index` puede fallar con
+  `FileNotFoundError` aunque la carpeta exista - OneDrive intercepta la escritura
+  de archivos nuevos. Workaround: fijar la variable de entorno `RAG_INDEX_DIR`
+  (o `RAG_FAISS_INDEX_PATH` para solo el indice) a una carpeta fuera de esa
+  sincronizacion, por ejemplo `C:\venvs\rag_medicina_funcional_data\index`.
+- **`app.py` se queda colgado sin error** (CPU casi en cero, no avanza) si
+  `gradio` se importa antes que `sentence-transformers`/PyTorch: el import de
+  PyTorch se cuelga indefinidamente. Reproducido de forma consistente en este
+  entorno. El fix ya esta aplicado en `app.py` (los imports de `src.*` van
+  antes que `import gradio`) - si se reordenan, vuelve a colgarse.
 
 ## Nota
 

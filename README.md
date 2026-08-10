@@ -1,16 +1,4 @@
-﻿---
-title: RAG Medicina Funcional
-emoji: 🩺
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 6.22.0
-app_file: app.py
-pinned: false
-license: mit
----
-
-# RAG Medicina Funcional
+﻿# RAG Medicina Funcional
 
 Proyecto educativo de Retrieval-Augmented Generation (RAG) "puro": cada etapa del
 pipeline esta implementada de forma explicita (sin frameworks tipo LangChain) para
@@ -19,7 +7,17 @@ entender el mecanismo completo, no solo llamar una API.
 Dominio: medicina funcional (corpus propio en `data/raw/`, 8 documentos reunidos de
 fuentes publicas en espanol).
 
-**Demo en vivo:** _pendiente de desplegar en Hugging Face Spaces._
+**Demo en vivo:** _pendiente de desplegar en Streamlit Community Cloud._
+
+## Dos interfaces
+
+- **`streamlit_app.py`** - deploy target (Streamlit Community Cloud, gratis).
+- **`app.py`** - interfaz Gradio para uso local (`python app.py`, abre el navegador
+  automaticamente). Hugging Face Spaces dejo de dar computo gratis para Gradio/Docker
+  Spaces (solo "Static" - sin backend - sigue siendo gratis ahi), asi que no es el
+  target de deploy, pero se mantiene como opcion local.
+
+Ambas llaman al mismo pipeline (`src/generate.py:generate_answer`).
 
 ## Pipeline
 
@@ -130,6 +128,25 @@ preguntas, edita esa linea o llama a las funciones `hybrid_search()` o
   PyTorch se cuelga indefinidamente. Reproducido de forma consistente en este
   entorno. El fix ya esta aplicado en `app.py` (los imports de `src.*` van
   antes que `import gradio`) - si se reordenan, vuelve a colgarse.
+  `streamlit_app.py` sigue la misma precaucion (probado sin problemas end-to-end,
+  incluyendo la llamada real a Gemini).
+
+## Deployment
+
+**Streamlit Community Cloud** (gratis):
+
+1. Repo publico en GitHub (ya en `jsebastianvel/-rag_medicina_funcional`).
+2. [share.streamlit.io](https://share.streamlit.io) -> sign in con GitHub -> "New app".
+3. Repo `jsebastianvel/-rag_medicina_funcional`, branch `main`, main file
+   `streamlit_app.py`.
+4. Settings -> Secrets:
+   ```toml
+   GEMINI_API_KEY = "tu-key-aca"
+   ```
+5. Settings -> Sharing: publico (si no, queda invite-only).
+6. Deploy. El primer arranque construye el indice FAISS automaticamente
+   (`ensure_index_built()` en `streamlit_app.py`) y descarga los modelos locales
+   de embeddings/reranking (puede tardar un par de minutos la primera vez).
 
 ## Nota
 

@@ -7,7 +7,7 @@ entender el mecanismo completo, no solo llamar una API.
 Dominio: medicina funcional (corpus propio en `data/raw/`, 8 documentos reunidos de
 fuentes publicas en espanol).
 
-**Demo en vivo:** _pendiente de desplegar en Streamlit Community Cloud._
+**Demo en vivo:** [functionalmedicinerag.streamlit.app](https://functionalmedicinerag.streamlit.app/)
 
 ## Dos interfaces
 
